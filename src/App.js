@@ -1,6 +1,7 @@
 import path from 'path';
 import express from 'express';
 import Controller from './Controller';
+import os from 'os';
 
 class App {
     constructor() {
@@ -15,17 +16,15 @@ class App {
     }
 
     onGet = (request, response) => {
-        const data = this._controller.getMessage();
-        console.log(data);        
-
-        response.json(data);
-        response.end();
+        const data = os.networkInterfaces();
+        
+        response.end(JSON.stringify({ data }));
     }
 
     onPost = (request, response) => {
         const { body } = request;
         this._controller.setMessage(body);
-        console.log(this._controller.getMessage());             
+        console.log();             
         
         response.end();
     }

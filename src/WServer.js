@@ -17,8 +17,8 @@ class WServer {
     }
 
     handleCon = ws => {
-        this._clients.add(ws);
-        
+        this._clients.add(ws);   
+
         ws.on('message', data => {
             data = JSON.parse(data);
 
@@ -36,9 +36,7 @@ class WServer {
         });
     }
 
-    startServer = () => {
-        this._server.listen(this._port, console.log('SERVER HAS BEEN STARTED ON PORT:', this._port));
-    }
+    startServer = () => this._server.listen(this._port, console.log('SERVER HAS BEEN STARTED ON PORT:', this._port));
 }
 
 export default WServer;
