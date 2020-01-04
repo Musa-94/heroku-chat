@@ -7,7 +7,7 @@ class Model {
 
     clearMessage = () => this._messages = [];
 
-    getMessage = () => this._messages;
+    getMessage = () => [...this._messages];
 }
 
 export default Model;

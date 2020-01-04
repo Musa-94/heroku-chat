@@ -13,11 +13,11 @@ class WServer {
         this._clients = new Set();
         this._controller = new Controller();
 
-        this._webSocketServer.on('connection', this.handleCon.bind(this));
+        this._webSocketServer.on('connection', this.handleCon.bind(this));        
     }
 
     handleCon = ws => {
-        this._clients.add(ws);   
+        this._clients.add(ws);
 
         ws.on('message', data => {
             data = JSON.parse(data);
