@@ -22,16 +22,16 @@ class WServer {
         ws.on('message', data => {
             data = JSON.parse(data);
 
-            if(data.clear !== 'clear') {
-                this._controller.setMessage(data);
-            } else {
-                this._controller.clearMessage();
-            }
+            // if(data.clear !== 'clear') {
+            //     this._controller.setMessage(data);
+            // } else {
+            //     this._controller.clearMessage();
+            // }
 
-            let messageModel = this._controller.getMessage();
+            // let messageModel = this._controller.getMessage();
 
             for(let client of this._clients) {
-                client.send(JSON.stringify(messageModel));
+                client.send(JSON.stringify(data));
             }
         });
     }

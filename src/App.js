@@ -1,7 +1,7 @@
 import path from 'path';
 import express from 'express';
 import Controller from './Controller';
-import ip from 'ip';
+
 
 class App {
     constructor() {
@@ -9,40 +9,39 @@ class App {
         this._app = express();
         this._app.use(express.json());
         this._app.use(express.static(path.resolve(__dirname, '../public')));
-        this._ip = ip;
-        
-        this._app.get('/getip', this.onIpGet);
+
+        this._app.post('/checkUser', this.onPostCheckUser);
         this._app.get('/message', this.onGet);
         this._app.post('/message', this.onPost);
         this._app.delete('/message', this.onDelete);
     }
 
-    onGet = (request, response) => {
-        const data = this._controller.getMessage();
-        
-        response.end(JSON.stringify(data));
-    }
-    
-    onIpGet = (request, response) => {
-        const data = ip.address()
-        
-        response.end(JSON.stringify({data}));
-    }
+        onPostCheckUser = (request, response) => {
+            const {body} = request;
+            let status = this._controller.searchPerson(body);
+            console.log(status);
+            response.end(JSON.stringify({status}));
+        };
 
-    onPost = (request, response) => {
-        const { body } = request;
-        this._controller.setMessage(body);          
-        
-        response.end();
-    }
+        onGet = (request, response) => {
+            const data = this._controller.getMessage();
 
-    onDelete = (request, response) => {
-        this._controller.clearMessage();
-        
-        response.end();
-    }
+            response.end(JSON.stringify(data));
+        };
 
-    getApp = () => this._app;
+        onPost = (request, response) => {
+            const {body} = request;
+            this._controller.setMessage(body);
+
+            response.end();
+        };
+
+        onDelete = (request, response) => {
+            this._controller.clearMessage();
+
+            response.end();
+        };
+
+        getApp = () => this._app;
 }
-
 export default App;
